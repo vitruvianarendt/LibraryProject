@@ -1,0 +1,30 @@
+﻿@model LibraryProject.Models.Book
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h3>Synopsis</h3>
+
+<div>
+
+    <hr />
+    <dl class="dl-horizontal dl-half">
+        <dd>
+            <img src="@Model.CoverUrl" style="max-width:200px" />
+        </dd>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+    </dl>
+
+</div>
+<p class="padd marg1">
+    @if (User.IsInRole("Librarian") || User.IsInRole("Editor"))
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) }
+    |
+@Html.ActionLink("Back to List", "Index") |
+</p>
+<hr />

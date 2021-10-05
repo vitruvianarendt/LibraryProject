@@ -1,0 +1,52 @@
+﻿@model IEnumerable<LibraryProject.Models.Author>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h1>All Authors</h1>
+
+<h4>
+    @if (User.IsInRole("Librarian") || User.IsInRole("Editor"))
+    {
+        @Html.ActionLink("Add Author", "Create")
+    }
+</h4>
+<table id="authorsTable" class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+
+                    @if (User.IsInRole("Librarian") || User.IsInRole("Editor"))
+                    {
+                        <text> | </text> @Html.ActionLink("Edit", "Edit", new { id = item.AuthorId }) <text> | </text>}
+                    @if (User.IsInRole("Librarian"))
+                    {
+                        @Html.ActionLink("Delete", "Delete", new { id = item.AuthorId })
+                        <text> | </text>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            var table = $("#authorsTable").DataTable();
+        });
+    </script>
+}
